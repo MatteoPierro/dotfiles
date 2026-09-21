@@ -1,12 +1,16 @@
+{{- $identityAgent := printf "%s/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" .chezmoi.homeDir -}}
+{{- if not .workLaptop -}}
+{{- $identityAgent = printf "%s/.bitwarden-ssh-agent.sock" .chezmoi.homeDir -}}
+{{- end }}
 Include {{ .chezmoi.homeDir }}/.colima/ssh_config
 
 Host gitlab.com
     AddKeysToAgent yes
-    IdentityAgent "{{ .chezmoi.homeDir }}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    IdentityAgent "{{ $identityAgent }}"
 
 Host github.com
     AddKeysToAgent yes
-    IdentityAgent "{{ .chezmoi.homeDir }}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+    IdentityAgent "{{ $identityAgent }}"
 
 Host *
     # UseKeychain yes

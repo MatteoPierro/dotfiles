@@ -1,3 +1,4 @@
+{{- $workLaptop := promptBoolOnce . "workLaptop" "Is this a work laptop" false -}}
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 mode: symlink
 
@@ -5,3 +6,6 @@ edit:
   command: code
   args:
     - --wait
+
+data:
+  workLaptop: {{ $workLaptop }}
