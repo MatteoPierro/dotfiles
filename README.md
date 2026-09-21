@@ -10,24 +10,23 @@ affect the same file.
 
 ## Dotfiles setup
 
-Install chezmoi and preview the files managed by this checkout:
+Install chezmoi and apply the dotfiles from GitHub:
 
 ```bash
 brew install chezmoi
-chezmoi --source "$PWD" init
-chezmoi --source "$PWD" diff
+chezmoi init --apply MatteoPierro
 ```
 
-Apply the configuration after reviewing the diff:
+Preview future changes without applying them:
 
 ```bash
-chezmoi --source "$PWD" apply
+chezmoi diff
 ```
 
 To capture later changes made directly to a managed file:
 
 ```bash
-chezmoi --source "$PWD" add ~/.config/wezterm/wezterm.lua
+chezmoi add ~/.config/wezterm/wezterm.lua
 ```
 
 ## Pre-commit setup
