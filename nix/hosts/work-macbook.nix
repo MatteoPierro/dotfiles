@@ -7,7 +7,7 @@
     ../modules/darwin/apps/work.nix
     (import ../lib/mk-dock.nix {
       browser = "Google Chrome";
-      passwordManager.app = "/Applications/1Password.app";
+      passwordManager.homeManagerApp = "1Password";
     })
   ];
 }
