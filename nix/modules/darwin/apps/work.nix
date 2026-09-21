@@ -10,6 +10,7 @@
     ];
 
     casks = [
+      "1password"
       "chatgpt"
       "codex-app"
       "copilot-cli"
