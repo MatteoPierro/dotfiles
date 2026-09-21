@@ -1,4 +1,8 @@
 { ... }:
 {
-  # macOS defaults belong here when system preferences are brought under management.
+  system.defaults.dock = {
+    autohide = true;
+    orientation = "bottom";
+    show-recents = false;
+  };
 }

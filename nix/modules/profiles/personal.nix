@@ -7,6 +7,7 @@
     gradle
     jdk
     jetbrains.webstorm
+    librewolf
     maven
     nmap
     nushell
