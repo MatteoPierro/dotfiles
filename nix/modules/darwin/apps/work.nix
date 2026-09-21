@@ -11,7 +11,6 @@
 
     casks = [
       "chatgpt"
-      "codex-app"
       "copilot-cli"
       "github-copilot-app"
       "miro"

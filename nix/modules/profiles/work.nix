@@ -7,6 +7,7 @@
     amazon-ecr-credential-helper
     bruno
     cloudflared
+    codex
     insomnia
     libpq
     mariadb.client
