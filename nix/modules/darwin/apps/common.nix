@@ -2,6 +2,7 @@
 {
   homebrew = {
     enable = true;
+    onActivation.cleanup = "zap";
     taps = [ "agavra/tap" ];
 
     brews = [
