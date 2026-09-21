@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+global_hooks_path="$(git config --global --get core.hooksPath || true)"
+if [[ -n "$global_hooks_path" && -x "$global_hooks_path/pre-commit" ]]; then
+  "$global_hooks_path/pre-commit" "$@"
+fi
+
+if ! command -v pre-commit >/dev/null 2>&1 && [[ -x /opt/homebrew/bin/pre-commit ]]; then
+  export PATH="/opt/homebrew/bin:$PATH"
+fi
+
+if ! command -v pre-commit >/dev/null 2>&1; then
+  echo "Error: pre-commit is not installed. Run ./scripts/setup-pre-commit.sh." >&2
+  exit 1
+fi
+
+exec pre-commit run --hook-stage pre-commit

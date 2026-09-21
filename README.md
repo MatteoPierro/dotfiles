@@ -2,7 +2,35 @@
 
 Personal configuration files protected by Betterleaks secret scanning.
 
-## Setup
+The repository uses [`.chezmoiroot`](.chezmoiroot), so managed source state lives
+under [`chezmoi/`](chezmoi) while repository tooling stays at the top level.
+The generated chezmoi configuration uses symlink mode and VS Code as its editor.
+Managed files link to the repository, so edits from either location immediately
+affect the same file.
+
+## Dotfiles setup
+
+Install chezmoi and preview the files managed by this checkout:
+
+```bash
+brew install chezmoi
+chezmoi --source "$PWD" init
+chezmoi --source "$PWD" diff
+```
+
+Apply the configuration after reviewing the diff:
+
+```bash
+chezmoi --source "$PWD" apply
+```
+
+To capture later changes made directly to a managed file:
+
+```bash
+chezmoi --source "$PWD" add ~/.config/wezterm/wezterm.lua
+```
+
+## Pre-commit setup
 
 Run the setup script after cloning the repository:
 
