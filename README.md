@@ -2,6 +2,36 @@
 
 Personal configuration files protected by Betterleaks secret scanning.
 
+## Nix configuration
+
+The flake defines separate personal and work MacBooks while sharing package
+modules between them. Portable packages live under `nix/modules/home`, role
+specific packages under `nix/modules/profiles`, and macOS-only applications
+under `nix/modules/darwin`. New hosts should be small compositions in
+`nix/hosts`; the Home Manager modules can also be reused by a future Linux host.
+
+Install Nix, then bootstrap the selected machine with nix-darwin:
+
+```bash
+nix run nix-darwin/master#darwin-rebuild -- switch --flake .#personal-macbook
+# or
+nix run nix-darwin/master#darwin-rebuild -- switch --flake .#work-macbook
+```
+
+After the first switch, apply later changes with:
+
+```bash
+darwin-rebuild switch --flake .#personal-macbook
+nix flake check
+```
+
+The host names and username in `nix/hosts` are intentionally the only
+machine-specific values. Change them to match the actual machines before the
+first switch. Nix installs and manages Homebrew, which is retained only for
+Darwin applications or tapped tools without a dependable nixpkgs package.
+Dock, keyboard, and other macOS defaults are deliberately deferred to
+`nix/modules/darwin/system-preferences.nix`.
+
 The repository uses [`.chezmoiroot`](.chezmoiroot), so managed source state lives
 under [`chezmoi/`](chezmoi) while repository tooling stays at the top level.
 The generated chezmoi configuration uses symlink mode and VS Code as its editor.
