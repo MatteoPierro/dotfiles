@@ -29,6 +29,9 @@ The host names and username in `nix/hosts` are intentionally the only
 machine-specific values. Change them to match the actual machines before the
 first switch. Nix installs and manages Homebrew, which is retained only for
 Darwin applications or tapped tools without a dependable nixpkgs package.
+Home Manager symlinks Nix application bundles and `mac-app-util` creates small
+launchers under `~/Applications/Home Manager Trampolines` so Spotlight can find
+them without copying the full applications.
 Dock, keyboard, and other macOS defaults are deliberately deferred to
 `nix/modules/darwin/system-preferences.nix`.
 

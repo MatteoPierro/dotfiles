@@ -6,7 +6,7 @@
   home.stateVersion = "24.11";
 
   targets.darwin = {
-    linkApps.enable = false;
-    copyApps.enable = pkgs.stdenv.hostPlatform.isDarwin;
+    linkApps.enable = pkgs.stdenv.hostPlatform.isDarwin;
+    copyApps.enable = false;
   };
 }

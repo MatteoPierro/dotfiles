@@ -1,4 +1,10 @@
-{ nix-darwin, home-manager, nix-homebrew, ... }:
+{
+  nix-darwin,
+  home-manager,
+  nix-homebrew,
+  mac-app-util,
+  ...
+}:
 {
   hostName,
   username,
@@ -22,7 +28,10 @@ nix-darwin.lib.darwinSystem {
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        users.${username}.imports = [ ../modules/home ] ++ homeModules;
+        users.${username}.imports = [
+          ../modules/home
+          mac-app-util.homeManagerModules.default
+        ] ++ homeModules;
       };
     }
   ] ++ modules;
