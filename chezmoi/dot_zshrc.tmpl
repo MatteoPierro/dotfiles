@@ -1,0 +1,181 @@
+zmodload zsh/zprof
+
+{{- if not .workLaptop }}
+export HOMEBREW_GITHUB_API_TOKEN="{{ (index (rbwFields "github.com") "Shell Token").value }}"
+{{- end }}
+
+export NVM_LAZY_LOAD=true
+export NVM_COMPLETION=true
+
+export HISTSIZE=1000000000
+export SAVEHIST=$HISTSIZE
+setopt EXTENDED_HISTORY
+setopt autocd
+autoload -U compinit; compinit
+
+eval "$(starship init zsh)"
+source <(fzf --zsh)
+eval "$(zoxide init zsh)"
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+source $HOME/.zsh-plugins/zsh-autoswitch-virtualenv/autoswitch_virtualenv.plugin.zsh
+source $HOME/.oh-my-zsh/plugins/git/git.plugin.zsh
+source $HOME/.oh-my-zsh/lib/git.zsh
+
+# this is needed for the autoswitch_virtualenv plugin
+alias python=python3
+alias pip=pip3
+
+export PATH="$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+alias ll='eza -lahF'
+alias find='fd'
+alias grep='rg'
+
+alias mct='mvn clean test'
+alias sudo='sudo '
+
+vpn(){
+ read -s "password?Enter Password: ";
+ echo -e $password | sudo -S openvpn --config $1 &> /dev/null &
+}
+
+vpn-disconnect(){
+ read -s "password?Enter Password: ";
+ echo -e $password | sudo -S ps -x | grep $1 | awk '{print $1;}'| xargs sudo kill &> /dev/null
+}
+
+vpn-reconnect(){
+ read -s "password?Enter Password: ";
+ echo -e $password | sudo -S ps -x | grep $1 | awk '{print $1;}'| xargs sudo kill &> /dev/null
+ echo -e $password | sudo -S openvpn --config $1 &> /dev/null &
+}
+
+alias v='f -e vi'
+eval "$(/usr/libexec/path_helper -s)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+ec2_list_aws()
+{
+    aws ec2 describe-instances --query "Reservations[].Instances[].[InstanceId,InstanceType,State.Name,PrivateIpAddress,PublicIpAddress,Tags[?Key=='Name'] | [0].Value]" --output table --filters Name=instance-state-name,Values=running --profile "$@"
+}
+#export PATH="${HOME}/.scalaenv/bin:/Users/matteopierro/bin:${PATH}"
+#eval "$(scalaenv init -)"
+export PATH="$HOME/.jenv/bin:$PATH"
+# eval "$(jenv init -)"
+
+jnv() {
+  eval "$(command jenv init -)"
+  jenv "$@"
+}
+
+pnv() {
+  eval "$(pyenv init --path)"
+  pyenv "$@"
+}
+
+export PATH="/usr/local/opt/unzip/bin:$PATH"
+alias gitlog='~/gitlog/gitlog.sh'
+alias json='jsonpp | pygmentize -l json'
+
+jcurl() {
+ curl -s $@ | jsonpp | pygmentize -l json
+}
+
+alias ssh='autossh -M 0'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"
+
+# alias aria2c='docker run --rm -d -v ~/Downloads:/data -p 6800:6800 -p 9100:8080 --name webui-aria2 elios85/webui-aria2'
+# alias kill-aria2c='docker kill webui-aria2'
+alias public_ip='http -b ifconfig.co'
+alias weatherSalerno='curl wttr.in/Salerno'
+alias weatherPisa='curl wttr.in/Pisa'
+alias weather='curl wttr.in/`curl --silent ifconfig.co/json | jq --raw-output '.city'`'
+
+export AWS_PROFILE=default
+export MFA_CONTAINERUSER_ARN="arn_here"
+
+function aws_login {
+    echo "Logging in using profile $AWS_PROFILE"
+    echo "enter token code"
+    read TOKEN_CODE
+
+    CREDENTIALS=$(aws sts get-session-token --serial-number $MFA_CONTAINERUSER_ARN --token-code $TOKEN_CODE)
+    export AWS_SECRET_ACCESS_KEY=$(echo $(echo $CREDENTIALS | jq -r '.Credentials.SecretAccessKey'))
+    export AWS_SESSION_TOKEN=$(echo $(echo $CREDENTIALS | jq -r '.Credentials.SessionToken'))
+    export AWS_ACCESS_KEY_ID=$(echo $(echo $CREDENTIALS | jq -r '.Credentials.AccessKeyId'))
+    LOGIN=$(aws iam get-user)
+    USERNAME=$(echo $(echo $LOGIN | jq -r '.User.UserName'))
+    echo "logged in as $USERNAME"
+}
+
+function aws_logout {
+    echo "logging out of aws"
+    unset AWS_SECRET_ACCESS_KEY
+    unset AWS_SESSION_TOKEN
+    unset AWS_ACCESS_KEY_ID
+}
+
+alias nomerged='git branch -r --no-merged main'
+
+function urldecode {
+     printf $(echo -n $1 | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')
+}
+
+urlencode () {
+	old_lc_collate=$LC_COLLATE
+	LC_COLLATE=C
+	local length="${#1}"
+	for ((i = 0; i < length; i++ )) do
+		local c="${1:$i:1}"
+		case $c in
+			([a-zA-Z0-9.~_-]) printf '%s' "$c" ;;
+			(*) printf '%%%02X' "'$c" ;;
+		esac
+	done
+	LC_COLLATE=$old_lc_collate
+}
+
+alias be='bundle exec'
+alias ber='bundle exec rspec'
+alias bet='bundle exec ruby'
+
+export PATH=$PATH:/usr/local/texlive/2025/bin/universal-darwin/:$HOME/.rd/bin
+
+source /Users/matteopierro/.config/broot/launcher/bash/br
+export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
+
+function xcodez() {
+  /opt/homebrew/bin/code $1 --profile matteo
+}
+
+. "$HOME/.cargo/env"
+
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
+
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export LIBRARY_PATH="/opt/homebrew/opt/libpq/lib:$LIBRARY_PATH"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/libpq/lib/pkgconfig:$PKG_CONFIG_PATH"
+export LD_LIBRARY_PATH="/opt/homebrew/opt/libpq/lib:$LD_LIBRARY_PATH"
+
+export PATH="$HOME/.rd/bin:$PATH"
+
+eval "$(mise activate zsh)"
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+function _wezterm_osc7() {
+  printf '\e]7;file://%s%s\e\\' "$HOST" "$PWD"
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _wezterm_osc7
+
+{{- if .workLaptop }}
+source $HOME/.zshrc_work
+{{- end }}
