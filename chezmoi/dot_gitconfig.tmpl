@@ -1,0 +1,33 @@
+[user]
+  name = Matteo Pierro
+  email = {{ .email }}
+
+[core]
+  excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
+  pager = delta
+{{ if .workLaptop }}
+[includeIf "gitdir:~/Documents/{{ .company }}/"]
+  path = .gitconfig-{{ .company | lower }}
+{{ end }}
+[github]
+  user = MatteoPierro
+
+[pull]
+  rebase = true
+
+[init]
+  defaultBranch = main
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+  side-by-side = true
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved = default

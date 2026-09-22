@@ -1,4 +1,9 @@
 {{- $workLaptop := promptBoolOnce . "workLaptop" "Is this a work laptop" false -}}
+{{- $email := promptStringOnce . "email" "Git email address" -}}
+{{- $company := "" -}}
+{{- if $workLaptop -}}
+{{-   $company = promptStringOnce . "company" "Company name" -}}
+{{- end -}}
 sourceDir: {{ .chezmoi.sourceDir | quote }}
 mode: symlink
 
@@ -9,3 +14,5 @@ edit:
 
 data:
   workLaptop: {{ $workLaptop }}
+  email: {{ $email | quote }}
+  company: {{ $company | quote }}
