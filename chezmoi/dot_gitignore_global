@@ -1,0 +1,7 @@
+.rvmrc
+out/
+.idea/
+*.iml
+*.env
+.DS_Store
+.docker-sync/
