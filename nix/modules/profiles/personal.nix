@@ -1,5 +1,7 @@
 { pkgs, ... }:
 {
+  imports = [ ./librewolf.nix ];
+
   home.packages = with pkgs; [
     bitwarden-desktop
     element-desktop
@@ -7,7 +9,6 @@
     gradle
     jdk
     jetbrains.webstorm
-    librewolf
     maven
     nmap
     nushell

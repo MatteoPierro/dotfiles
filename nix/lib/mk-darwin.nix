@@ -1,6 +1,7 @@
 {
   nix-darwin,
   home-manager,
+  nur,
   nix-homebrew,
   mac-app-util,
   ...
@@ -24,6 +25,7 @@ nix-darwin.lib.darwinSystem {
       networking.hostName = hostName;
       nixpkgs.hostPlatform = system;
       nixpkgs.config.allowUnfree = true;
+      nixpkgs.overlays = [ nur.overlays.default ];
 
       home-manager = {
         useGlobalPkgs = true;
