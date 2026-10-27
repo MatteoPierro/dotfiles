@@ -151,14 +151,14 @@ alias bet='bundle exec ruby'
 
 export PATH=$PATH:/usr/local/texlive/2025/bin/universal-darwin/:$HOME/.rd/bin
 
-source /Users/matteopierro/.config/broot/launcher/bash/br
+eval "$(broot --print-shell-function zsh)"
 export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 
 function xcodez() {
   /opt/homebrew/bin/code $1 --profile matteo
 }
 
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
