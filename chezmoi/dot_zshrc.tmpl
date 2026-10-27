@@ -16,7 +16,11 @@ autoload -U compinit; compinit
 eval "$(starship init zsh)"
 source <(fzf --zsh)
 eval "$(zoxide init zsh)"
+{{- if .workLaptop }}
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+{{- else }}
+source /etc/profiles/per-user/$USER/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+{{- end }}
 
 source $HOME/.zsh-plugins/zsh-autoswitch-virtualenv/autoswitch_virtualenv.plugin.zsh
 source $HOME/.oh-my-zsh/plugins/git/git.plugin.zsh
@@ -147,14 +151,14 @@ alias bet='bundle exec ruby'
 
 export PATH=$PATH:/usr/local/texlive/2025/bin/universal-darwin/:$HOME/.rd/bin
 
-source /Users/matteopierro/.config/broot/launcher/bash/br
+eval "$(broot --print-shell-function zsh)"
 export PATH="$PATH:$HOME/.cargo/bin:$HOME/.local/bin"
 
 function xcodez() {
   /opt/homebrew/bin/code $1 --profile matteo
 }
 
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
