@@ -6,7 +6,15 @@
     profiles.personal = {
       id = 0;
       isDefault = true;
-      settings."extensions.autoDisableScopes" = 0;
+      settings = {
+        "extensions.autoDisableScopes" = 0;
+
+        # Keep logins across restarts; LibreWolf wipes cookies/site data on shutdown by default.
+        "privacy.clearOnShutdown.cookies" = false;
+        "privacy.clearOnShutdown.sessions" = false;
+        "privacy.clearOnShutdown.offlineApps" = false;
+        "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+      };
 
       search = {
         force = true;
