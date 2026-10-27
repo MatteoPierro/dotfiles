@@ -20,6 +20,12 @@
 
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
+  # Expose zsh plugins installed by Home Manager under /etc/profiles/per-user.
+  environment.pathsToLink = [
+    "/share/zsh-autosuggestions"
+    "/share/zsh-syntax-highlighting"
+  ];
+
   nix-homebrew = {
     enable = true;
     user = username;

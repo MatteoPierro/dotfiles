@@ -2,6 +2,14 @@
 {
   imports = [ ./librewolf.nix ];
 
+  programs.rbw = {
+    enable = true;
+    settings = {
+      email = "dummy@example.com";
+      pinentry = pkgs.pinentry_mac;
+    };
+  };
+
   home.packages = with pkgs; [
     bitwarden-desktop
     element-desktop
@@ -13,8 +21,6 @@
     nmap
     nushell
     qemu
-    rbw
-    ruby-build
     signal-desktop
     telegram-desktop
     texliveFull

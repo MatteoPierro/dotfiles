@@ -4,7 +4,7 @@
 }:
 { username, ... }:
 let
-  homeManagerApps = "/Users/${username}/Applications/Home Manager Trampolines";
+  homeManagerApps = "/Users/${username}/Applications/Home Manager Apps";
   passwordManagerPath =
     if passwordManager ? homeManagerApp then
       "${homeManagerApps}/${passwordManager.homeManagerApp}.app"

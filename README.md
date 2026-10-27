@@ -10,18 +10,25 @@ specific packages under `nix/modules/profiles`, and macOS-only applications
 under `nix/modules/darwin`. New hosts should be small compositions in
 `nix/hosts`; the Home Manager modules can also be reused by a future Linux host.
 
-Install Nix, then bootstrap the selected machine with nix-darwin:
+Install Nix, then bootstrap the selected machine with nix-darwin. Since its
+25.05 release, nix-darwin activates the whole system configuration as root
+(`/etc`, launchd services, Homebrew, and the Nix daemon), so `switch` must run
+with `sudo`. User-scoped settings such as Dock and macOS defaults are applied to
+`system.primaryUser`, set in
+[`nix/modules/darwin/default.nix`](nix/modules/darwin/default.nix), and Home
+Manager still activates as that user. Only `switch` needs root; `build` and
+`nix flake check` do not:
 
 ```bash
-nix run nix-darwin/master#darwin-rebuild -- switch --flake .#personal-macbook
+sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#personal-macbook
 # or
-nix run nix-darwin/master#darwin-rebuild -- switch --flake .#work-macbook
+sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#work-macbook
 ```
 
 After the first switch, apply later changes with:
 
 ```bash
-darwin-rebuild switch --flake .#personal-macbook
+sudo darwin-rebuild switch --flake .#personal-macbook
 nix flake check
 ```
 
@@ -29,9 +36,8 @@ The host names and username in `nix/hosts` are intentionally the only
 machine-specific values. Change them to match the actual machines before the
 first switch. Nix installs and manages Homebrew, which is retained only for
 Darwin applications or tapped tools without a dependable nixpkgs package.
-Home Manager symlinks Nix application bundles and `mac-app-util` creates small
-launchers under `~/Applications/Home Manager Trampolines` so Spotlight can find
-them without copying the full applications.
+Home Manager copies Nix application bundles to `~/Applications/Home Manager Apps`
+so Spotlight indexes them and Dock pins match the running applications.
 Dock, keyboard, and other macOS defaults are deliberately deferred to
 `nix/modules/darwin/system-preferences.nix`.
 
@@ -59,7 +65,7 @@ Add the new Nix module to Git's index before evaluating the Git-backed flake:
 
 ```bash
 git add nix/modules/profiles/librewolf.nix
-darwin-rebuild switch --flake .#personal-macbook
+sudo darwin-rebuild switch --flake .#personal-macbook
 ```
 
 On launch, verify the active profile in `about:profiles`; select `personal`

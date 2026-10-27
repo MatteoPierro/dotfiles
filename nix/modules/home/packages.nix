@@ -70,7 +70,6 @@
     pre-commit
     pyenv
     python312
-    qt6.full
     ranger
     rectangle
     ripgrep
