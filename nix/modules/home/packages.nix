@@ -79,7 +79,7 @@
     sl
     speedtest-go
     starship
-    silver-searcher
+    silver-searcher-ng
     tig
     tmux
     tree
