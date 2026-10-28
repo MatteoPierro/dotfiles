@@ -77,6 +77,7 @@
     screen
     skopeo
     sl
+    speedtest-go
     starship
     silver-searcher-ng
     tig
