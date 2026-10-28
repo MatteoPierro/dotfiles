@@ -3,6 +3,7 @@
   system.defaults.NSGlobalDomain = {
     KeyRepeat = 2;
     InitialKeyRepeat = 15;
+    "com.apple.keyboard.fnState" = true;
   };
 
   system.defaults.dock = {
