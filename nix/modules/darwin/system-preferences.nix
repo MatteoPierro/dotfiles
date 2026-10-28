@@ -10,4 +10,6 @@
     orientation = "bottom";
     show-recents = false;
   };
+
+  system.defaults.controlcenter.Bluetooth = true;
 }
