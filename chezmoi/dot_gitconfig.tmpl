@@ -4,6 +4,7 @@
 
 [core]
   excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
+  editor = vi
   pager = delta
 {{ if .workLaptop }}
 [includeIf "gitdir:~/Documents/{{ .company }}/"]
