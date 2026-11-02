@@ -21,6 +21,7 @@
     delta
     devcontainer
     diff-pdf
+    discord
     dive
     dnstop
     docker-compose
