@@ -18,6 +18,7 @@
       "logitune"
       "notion"
       "tableplus"
+      "vorssaint"
     ];
   };
 }
