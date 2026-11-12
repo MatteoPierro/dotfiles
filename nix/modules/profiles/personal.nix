@@ -22,7 +22,7 @@
     nushell
     qemu
     signal-desktop
-    telegram-desktop
+    # telegram-desktop
     texliveFull
   ];
 }
