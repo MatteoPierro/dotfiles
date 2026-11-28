@@ -28,8 +28,8 @@
     dotenv-linter
     duf
     dust
-    elixir
-    erlang
+    beamPackages.elixir
+    beamPackages.erlang
     eza
     fd
     fx
