@@ -1,0 +1,12 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/sh
+set -eu
+# Rectangle refuses a symlinked RectangleConfig.json, so copy it; it imports and renames it on launch.
+# RectangleConfig.json hash: {{ include ".rectangle/RectangleConfig.json" | sha256sum }}
+dir="$HOME/Library/Application Support/Rectangle"
+/usr/bin/pkill -x Rectangle || true
+mkdir -p "$dir"
+install -m 600 {{ joinPath .chezmoi.sourceDir ".rectangle/RectangleConfig.json" | quote }} "$dir/RectangleConfig.json"
+/usr/bin/defaults write com.knollsoft.Rectangle internalTilingNotified -bool true
+/usr/bin/open -a Rectangle
+{{ end -}}

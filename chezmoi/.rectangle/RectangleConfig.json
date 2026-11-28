@@ -1,0 +1,13 @@
+{
+  "bundleId": "com.knollsoft.Rectangle",
+  "version": "1",
+  "shortcuts": {
+    "maximize": { "keyCode": 36, "modifierFlags": 1572864 },
+    "toggleTodo": { "keyCode": 11, "modifierFlags": 786432 },
+    "reflowTodo": { "keyCode": 45, "modifierFlags": 786432 }
+  },
+  "defaults": {
+    "allowAnyShortcut": { "bool": true },
+    "SUEnableAutomaticChecks": { "bool": false }
+  }
+}
